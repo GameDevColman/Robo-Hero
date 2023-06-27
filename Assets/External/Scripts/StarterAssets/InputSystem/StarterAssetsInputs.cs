@@ -10,6 +10,7 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
+		public int mouseMovementSpeed = 5;
 		public bool jump;
 		public bool sprint;
 
@@ -30,7 +31,7 @@ namespace StarterAssets
 		{
 			if(cursorInputForLook)
 			{
-				LookInput(value.Get<Vector2>());
+				LookInput(value.Get<Vector2>() * mouseMovementSpeed);
 			}
 		}
 
