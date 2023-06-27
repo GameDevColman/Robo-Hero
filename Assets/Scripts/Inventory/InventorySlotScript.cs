@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Ran.Item;
+using Robo.Item;
 
 public class InventorySlotScript : MonoBehaviour
 {

@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Robo.Item;
 using UnityEngine;
-using Ran.Item;
 
 public class InventoryManagerScript : MonoBehaviour
 {
-    public int space = 4;
+    public int space = 8;
     public List<Item> items = new List<Item>();
-
+    public Transform inventory;
+    
     // Delegate is event that you can subscribe methods to, the event will trigger all methods
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
-
+    
     public bool Add(Item item)
     {
         if (items.Count >= space)
@@ -37,6 +38,9 @@ public class InventoryManagerScript : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown("i"))
+        {
+            inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
+        }
     }
 }

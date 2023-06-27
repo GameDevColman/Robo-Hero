@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ran.Item
+namespace Robo.Item
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
     public class Item : ScriptableObject
