@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Robo.Item;
+using Inventory.Items;
 using UnityEngine;
 
 public class InventoryManagerScript : MonoBehaviour
