@@ -24,7 +24,7 @@ namespace UnityStandardAssets.Effects
         }
 
 
-        private IEnumerator OnCollisionEnter(Collision col)
+        private IEnumerator OnCollisionEnter(UnityEngine.Collision col)
         {
             if (enabled)
             {

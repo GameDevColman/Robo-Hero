@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using Inventory.Items;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class Collectable : MonoBehaviour
+namespace Inventory.Items
 {
-    public Item item;
-    public Dialog dialog;
-
-    private void OnCollisionEnter(Collision collision)
+    public class Collectable : MonoBehaviour
     {
-        if (collision.collider.CompareTag("Player"))
+        public Item item;
+        public Dialog dialog;
+
+        private void OnCollisionEnter(UnityEngine.Collision collision)
         {
-            SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
-            bool isSuccessfullyCollected = SceneManagerScript.Instance.inventoryManagerScript.Add(item);
-            if (isSuccessfullyCollected)
-                Destroy(gameObject);
+            Debug.Log("Hi");
+            if (collision.collider.CompareTag("Player"))
+            {
+                SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
+                bool isSuccessfullyCollected = SceneManagerScript.Instance.inventoryManagerScript.Add(item);
+                if (isSuccessfullyCollected)
+                    Destroy(gameObject);
+            }
         }
     }
 }
