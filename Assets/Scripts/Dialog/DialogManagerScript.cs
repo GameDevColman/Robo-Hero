@@ -22,7 +22,7 @@ public class DialogManagerScript : MonoBehaviour
         audioSource.Stop();
     }
 
-    public void StartDialogue(Dialog dialog)
+    public void StartDialog(Dialog dialog)
     {
         afterDialogueAction = dialog.afterDialogAction;
         animator.SetBool("isOpen", true);
