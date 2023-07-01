@@ -12,7 +12,7 @@ public class DialogManagerScript : MonoBehaviour
     public Image rightCharacterImage;
 
     private Queue<DialogElement> sentences;
-    private UnityEvent afterDialogueAction;
+    private UnityEvent afterDialogAction;
     private AudioSource audioSource;
 
     void Start()
@@ -24,13 +24,13 @@ public class DialogManagerScript : MonoBehaviour
 
     public void StartDialog(Dialog dialog)
     {
-        afterDialogueAction = dialog.afterDialogAction;
+        afterDialogAction = dialog.afterDialogAction;
         animator.SetBool("isOpen", true);
         sentences.Clear();
-        SetPlayerIsInDialogueTrue();
-        foreach (DialogElement dialogueElement in dialog.sentences)
+        SetPlayerIsInDialogTrue();
+        foreach (DialogElement dialogElement in dialog.sentences)
         {
-            sentences.Enqueue(dialogueElement);
+            sentences.Enqueue(dialogElement);
         }
         DisplayNextSentence();
     }
@@ -39,7 +39,7 @@ public class DialogManagerScript : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndDialogue();
+            EndDialog();
             return;
         }
         StopAllCoroutines();
@@ -66,13 +66,13 @@ public class DialogManagerScript : MonoBehaviour
         }
     }
 
-    private void EndDialogue()
+    private void EndDialog()
     {
         rightCharacterImage.enabled = false;
         leftCharacterImage.enabled = false;
         animator.SetBool("isOpen", false);
-        SetPlayerIsInDialogueFalse();
-        afterDialogueAction.Invoke();
+        SetPlayerIsInDialogFalse();
+        afterDialogAction.Invoke();
     }
 
     private void PlaceCharacterImage(Sprite sprite, bool placeImageToTheRight)
@@ -94,18 +94,18 @@ public class DialogManagerScript : MonoBehaviour
         }
     }
 
-    private void SetPlayerIsInDialogueTrue()
+    private void SetPlayerIsInDialogTrue()
     {
-        // if (SceneManagerScript.Instance.firstPersonController != null)
-        //     SceneManagerScript.Instance.firstPersonController.isInDialogue = true;
+        if (SceneManagerScript.Instance.playerScript != null)
+            SceneManagerScript.Instance.playerScript.isInDialog = true;
         // if (SceneManagerScript.Instance.thirdPersonController != null)
         //     SceneManagerScript.Instance.thirdPersonController.isInDialogue = true;
     }
 
-    private void SetPlayerIsInDialogueFalse()
+    private void SetPlayerIsInDialogFalse()
     {
-        // if (SceneManagerScript.Instance.firstPersonController != null)
-        //     SceneManagerScript.Instance.firstPersonController.isInDialogue = false;
+        if (SceneManagerScript.Instance.playerScript != null)
+            SceneManagerScript.Instance.playerScript.isInDialog = false;
         // if (SceneManagerScript.Instance.thirdPersonController != null)
         //     SceneManagerScript.Instance.thirdPersonController.isInDialogue = false;
     }
