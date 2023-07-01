@@ -7,9 +7,8 @@ namespace Inventory.Items
         public Item item;
         public Dialog dialog;
 
-        private void OnCollisionEnter(UnityEngine.Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log("Hi");
             if (collision.collider.CompareTag("Player"))
             {
                 SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
