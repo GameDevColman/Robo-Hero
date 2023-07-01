@@ -8,7 +8,7 @@ public class SoundManagerScript : MonoBehaviour
 
     public void PlaySound(AudioClip audioClip)
     {
-        AudioSource.PlayClipAtPoint(audioClip, SceneManagerScript.Instance.thirdPersonController.transform.position);
+        AudioSource.PlayClipAtPoint(audioClip, SceneManagerScript.Instance.playerScript.transform.position);
     }
 
     public void PlayBackgroundMusic(AudioClip audioClip)

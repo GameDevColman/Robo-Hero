@@ -8,8 +8,8 @@ public class SceneManagerScript : MonoBehaviour
 {
     // Declare any public variables that you want to be able 
     // to access throughout your scene
-    public ThirdPersonController thirdPersonController;
-    public FirstPersonController firstPersonController;
+    public PlayerScript playerScript;
+    // public FirstPersonController firstPersonController;
     public DialogManagerScript dialogManagerScript;
     public InventoryManagerScript inventoryManagerScript;
 
@@ -20,8 +20,8 @@ public class SceneManagerScript : MonoBehaviour
         else { Destroy(gameObject); }
         // Cache references to all desired variables
         dialogManagerScript = FindObjectOfType<DialogManagerScript>();
-        thirdPersonController = FindObjectOfType<ThirdPersonController>();
-        firstPersonController = FindObjectOfType<FirstPersonController>();
+        playerScript = FindObjectOfType<PlayerScript>();
+        // firstPersonController = FindObjectOfType<FirstPersonController>();
         inventoryManagerScript = FindObjectOfType<InventoryManagerScript>();
     }
 }
