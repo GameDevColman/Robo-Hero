@@ -30,6 +30,11 @@ public class InventoryManagerScript : MonoBehaviour
             onItemChangedCallback.Invoke();
     }
 
+    public Item getItemBySlot(int slotNumber)
+    {
+        return items[slotNumber - 1];
+    }
+
     void Start()
     {
 
