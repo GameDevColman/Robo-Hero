@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryManagerScript : MonoBehaviour
 {
-    public int space = 8;
+    public int space = 4;
     public List<Item> items = new List<Item>();
     public Transform inventory;
     
@@ -28,11 +28,6 @@ public class InventoryManagerScript : MonoBehaviour
         items.Remove(item);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
-    }
-
-    public Item getItemBySlot(int slotNumber)
-    {
-        return items[slotNumber - 1];
     }
 
     void Start()
