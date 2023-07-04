@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Inventory.Items;
 using UnityEngine;
 
 public class InventoryUIScript : MonoBehaviour
@@ -13,6 +14,7 @@ public class InventoryUIScript : MonoBehaviour
     {
         m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript;
         m_inventoryManagerScript.onItemChangedCallback += UpdateUI;
+        m_inventoryManagerScript.onItemUsedCallback += UpdateSlot;
         m_inventorySlots = inventorySlots.GetComponentsInChildren<InventorySlotScript>();
     }
 
@@ -28,6 +30,18 @@ public class InventoryUIScript : MonoBehaviour
             {
                 m_inventorySlots[i].ClearSlot();
             }    
+        }
+    }
+    
+    void UpdateSlot(Item item)
+    {
+        for (int i = 0; i < m_inventorySlots.Length; i++)
+        {
+            m_inventorySlots[i].UnuseItem();
+            if (item == m_inventorySlots[i].item)
+            {
+                m_inventorySlots[i].UseItem();
+            }
         }
     }
 }

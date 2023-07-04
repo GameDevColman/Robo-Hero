@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     public float arcRange = 1f;
     public float attackDamage = 50f;
     public bool hasProjectileAbility = true;
+    public bool hasEquipAbility = true;
     // public StealthStatScript stealthStatScript;
     // public PlayerAttachedVolumeScript playerAttachedVolumeScript;
 

@@ -10,7 +10,9 @@ public class InventoryManagerScript : MonoBehaviour
     
     // Delegate is event that you can subscribe methods to, the event will trigger all methods
     public delegate void OnItemChanged();
+    public delegate void OnItemUsed(Item item);
     public OnItemChanged onItemChangedCallback;
+    public OnItemUsed onItemUsedCallback;
     
     public bool Add(Item item)
     {
@@ -28,6 +30,14 @@ public class InventoryManagerScript : MonoBehaviour
         items.Remove(item);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
+    }
+    
+    public void Use(Item item)
+    {
+        items.Find(i => i.isUsed).isUsed = false;
+        items.Find(i => i == item).isUsed = true;
+        if (onItemUsedCallback != null)
+            onItemUsedCallback.Invoke(item);
     }
 
     void Start()

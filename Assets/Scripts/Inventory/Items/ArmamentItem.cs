@@ -22,6 +22,7 @@ public class ArmamentItem : Item
                     Transform playerTransform = SceneManagerScript.Instance.playerScript.transform;
                     Instantiate(armamentPrefab, playerTransform.position + playerTransform.TransformDirection(new Vector3(0, -0.5f, 1f)), playerTransform.rotation);
                     // SceneManagerScript.Instance.inventoryManagerScript.Remove(this);
+                    SceneManagerScript.Instance.inventoryManagerScript.Use(this);
                     // Todo: highlight using slot
                     if (successUsingItemAudio)
                         AudioSource.PlayClipAtPoint(successUsingItemAudio, hit.transform.position);
