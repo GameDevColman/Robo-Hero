@@ -8,23 +8,12 @@ public class EndSceneManager : MonoBehaviour
     public Dialog dialog;
     public UnityEvent actions = new UnityEvent();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
             actions.Invoke();
+            Destroy(gameObject.GetComponent<Collider>());
         }
     }
     
@@ -35,7 +24,7 @@ public class EndSceneManager : MonoBehaviour
 
     public void EndScene(int sceneIndex)
     {
-        StartCoroutine(MoveToEndSceneAfterDelay(3f, sceneIndex));
+        StartCoroutine(MoveToEndSceneAfterDelay(2f, sceneIndex));
     }
 
     IEnumerator MoveToEndSceneAfterDelay(float delay, int sceneIndex)

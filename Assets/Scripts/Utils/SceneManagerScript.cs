@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -12,6 +13,7 @@ public class SceneManagerScript : MonoBehaviour
     // public FirstPersonController firstPersonController;
     public DialogManagerScript dialogManagerScript;
     public InventoryManagerScript inventoryManagerScript;
+    public StateManagerScript stateManagerScript;
 
     public static SceneManagerScript Instance { get; private set; } // static singleton
     void Awake()
@@ -23,5 +25,6 @@ public class SceneManagerScript : MonoBehaviour
         playerScript = FindObjectOfType<PlayerScript>();
         // firstPersonController = FindObjectOfType<FirstPersonController>();
         inventoryManagerScript = InventoryManagerScript.Instance;
+        stateManagerScript = StateManagerScript.Instance;
     }
 }

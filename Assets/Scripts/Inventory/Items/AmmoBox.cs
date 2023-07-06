@@ -5,7 +5,6 @@ namespace Inventory.Items
 {
     public class AmmoBox : MonoBehaviour
     {
-        public Text quantity;
         public Dialog dialog;
         private const int BulletsQuantity = 333;
 
@@ -14,7 +13,7 @@ namespace Inventory.Items
             if (collision.collider.CompareTag("Player"))
             {
                 SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
-                quantity.text = (int.Parse(quantity.text) + BulletsQuantity).ToString();
+                StateManagerScript.Instance.AddBullets(BulletsQuantity);
                 Destroy(gameObject);
             }
         }
