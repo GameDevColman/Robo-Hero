@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Inventory.Items;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryUIScript : MonoBehaviour
@@ -16,6 +15,7 @@ public class InventoryUIScript : MonoBehaviour
         m_inventoryManagerScript.onItemChangedCallback += UpdateUI;
         m_inventoryManagerScript.onItemUsedCallback += UpdateSlot;
         m_inventorySlots = inventorySlots.GetComponentsInChildren<InventorySlotScript>();
+        UpdateUI();
     }
 
     void UpdateUI()

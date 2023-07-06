@@ -22,6 +22,6 @@ public class SceneManagerScript : MonoBehaviour
         dialogManagerScript = FindObjectOfType<DialogManagerScript>();
         playerScript = FindObjectOfType<PlayerScript>();
         // firstPersonController = FindObjectOfType<FirstPersonController>();
-        inventoryManagerScript = FindObjectOfType<InventoryManagerScript>();
+        inventoryManagerScript = InventoryManagerScript.Instance;
     }
 }

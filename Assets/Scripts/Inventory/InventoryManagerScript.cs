@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Inventory.Items;
 using UnityEngine;
@@ -13,7 +14,15 @@ public class InventoryManagerScript : MonoBehaviour
     public delegate void OnItemUsed(Item item);
     public OnItemChanged onItemChangedCallback;
     public OnItemUsed onItemUsedCallback;
-    
+
+    public static InventoryManagerScript Instance { get; private set; } // static singleton
+
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
+    }
+
     public bool Add(Item item)
     {
         if (items.Count >= space)
