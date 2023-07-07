@@ -4,10 +4,10 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class EnemySteeringScript : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private float moveSpeed = 6;
+    [SerializeField] private float moveSpeed = 10;
     [SerializeField] private float rotationSpeed = 1;
     [SerializeField] private int stoppingDistance = 2;
-    [SerializeField] private int safeDistance = 100;
+    [SerializeField] private int minDistance = 2;
 
     public AIState currentState;
 
@@ -27,13 +27,11 @@ public class EnemySteeringScript : MonoBehaviour
     {
         switch(currentState)
         {
-            case AIState.Idle:
-                break;
             case AIState.Pursuit:
                 Pursuit();
                 break;
-            case AIState.Evade:
-                Evade();
+            case AIState.Seek:
+                Seek();
                 break;
             default:
                 break;
@@ -64,23 +62,17 @@ public class EnemySteeringScript : MonoBehaviour
 
     }
 
-    private void Evade()
-    {
-        int iterationAhead = 30;
-        Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
-        Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
-        Vector3 direction = transform.position - targetFuturePosition;
+    private void Seek()
+    { 
+        Vector3 direction = target.position - transform.position;
+
         direction.y = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
-        if (direction.magnitude < safeDistance)
+        if (direction.magnitude > minDistance)
         {
-            //isWalking = true;
-            Vector3 moveVector = direction.normalized * moveSpeed;
-            moveVector.y = rigidBody.velocity.y;
-            rigidBody.velocity = moveVector;
+            Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime;
+            transform.position += moveVector;
         }
-        else
-            playerHit = false;
     }
 
 }
