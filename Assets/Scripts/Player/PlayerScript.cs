@@ -26,7 +26,8 @@ public class PlayerScript : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
-        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript;
+        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript != null ?
+            SceneManagerScript.Instance.inventoryManagerScript : InventoryManagerScript.Instance;
     }
 
     void Update()

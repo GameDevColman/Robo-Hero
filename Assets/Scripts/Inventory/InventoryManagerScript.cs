@@ -16,7 +16,7 @@ public class InventoryManagerScript : MonoBehaviour
     public OnItemUsed onItemUsedCallback;
 
     public static InventoryManagerScript Instance { get; private set; } // static singleton
-
+    
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -47,11 +47,6 @@ public class InventoryManagerScript : MonoBehaviour
         items.Find(i => i == item).isUsed = true;
         if (onItemUsedCallback != null)
             onItemUsedCallback.Invoke(item);
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()

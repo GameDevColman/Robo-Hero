@@ -10,7 +10,8 @@ public class StateUIScript : MonoBehaviour
 
     void Start()
     {
-        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript;
+        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript != null ?
+            SceneManagerScript.Instance.stateManagerScript : StateManagerScript.Instance;
         m_stateManagerScript.onBulletsQuantityChangedCallback += ChangeBulletsQuantity;
         ChangeBulletsQuantity();
     }
