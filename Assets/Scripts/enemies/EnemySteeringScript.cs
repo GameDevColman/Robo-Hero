@@ -13,14 +13,13 @@ public class EnemySteeringScript : MonoBehaviour
 
     private Animator animator;
     private Rigidbody rigidBody;
-    private bool playerHit = false;
-    //private EnemyHealthScript enemyHealth;
+    private EnemyInventory enemyinventory;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
-        //enemyHealth = GetComponent<EnemyHealthScript>();
+        //enemyHealth = GetComponent<EnemyInventoryScript>();
     }
 
     private void Update()
@@ -37,7 +36,6 @@ public class EnemySteeringScript : MonoBehaviour
                 break;
         }
 
-        animator.SetBool("playerHit", playerHit);
     }
 
     private void Pursuit()
@@ -56,9 +54,9 @@ public class EnemySteeringScript : MonoBehaviour
         }
         else
         {
-            playerHit = true;
-            //enemyHealth.AttackPlayer();
+            animator.SetBool("PlayerInRadius", true);
         }
+        
 
     }
 
@@ -72,6 +70,8 @@ public class EnemySteeringScript : MonoBehaviour
         {
             Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime;
             transform.position += moveVector;
+        } else {
+            animator.SetBool("PlayerInRadius", true);
         }
     }
 }
