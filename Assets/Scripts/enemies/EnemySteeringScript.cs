@@ -74,5 +74,4 @@ public class EnemySteeringScript : MonoBehaviour
             transform.position += moveVector;
         }
     }
-
 }
