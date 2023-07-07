@@ -13,7 +13,7 @@ public class EnemySteeringScript : MonoBehaviour
 
     private Animator animator;
     private Rigidbody rigidBody;
-    private bool isWalking = false;
+    private bool playerHit = false;
     //private EnemyHealthScript enemyHealth;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class EnemySteeringScript : MonoBehaviour
                 break;
         }
 
-        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("playerHit", playerHit);
     }
 
     private void Pursuit()
@@ -52,14 +52,13 @@ public class EnemySteeringScript : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
         if (direction.magnitude > stoppingDistance)
         {
-            isWalking = true;
             Vector3 moveVector = direction.normalized * moveSpeed;
             moveVector.y = rigidBody.velocity.y;
             rigidBody.velocity = moveVector;
         }
         else
         {
-            isWalking = false;
+            playerHit = true;
             //enemyHealth.AttackPlayer();
         }
 
@@ -75,13 +74,13 @@ public class EnemySteeringScript : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
         if (direction.magnitude < safeDistance)
         {
-            isWalking = true;
+            //isWalking = true;
             Vector3 moveVector = direction.normalized * moveSpeed;
             moveVector.y = rigidBody.velocity.y;
             rigidBody.velocity = moveVector;
         }
         else
-            isWalking = false;
+            playerHit = false;
     }
 
 }
