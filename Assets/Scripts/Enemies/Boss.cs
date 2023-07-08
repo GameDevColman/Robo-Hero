@@ -10,14 +10,14 @@ public class Boss : MonoBehaviour
 
     // public Animator animator;
 
-    public LayerMask whatIsGround, whatIsPlayer;
+    public LayerMask whatIsPlayer;
 
     public float health;
 
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange;
+    public Transform wayPoints;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -49,7 +49,7 @@ public class Boss : MonoBehaviour
     {
         if (!walkPointSet) SearchWalkPoint();
     
-        if (walkPointSet)
+        if (walkPointSet) 
             agent.SetDestination(walkPoint);
     
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -60,14 +60,8 @@ public class Boss : MonoBehaviour
     }
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-    
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-    
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
+        walkPoint = wayPoints.GetChild(Random.Range(0, wayPoints.childCount)).transform.position;
+        walkPointSet = true;
     }
     
     private void ChasePlayer()
