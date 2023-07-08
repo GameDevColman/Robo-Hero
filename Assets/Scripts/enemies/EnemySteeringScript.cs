@@ -26,7 +26,6 @@ public class EnemySteeringScript : MonoBehaviour
     {
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Wander"))
         {
-            Debug.Log("Entry");
             _animator.SetBool("ReadyToShoot", false);
             _animator.SetBool("PlayerInRadius", false);
             currentState = AIState.Seek;
