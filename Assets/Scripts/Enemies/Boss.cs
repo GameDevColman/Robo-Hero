@@ -8,6 +8,8 @@ public class Boss : MonoBehaviour
 
     public Transform player;
 
+    // public Animator animator;
+
     public LayerMask whatIsGround, whatIsPlayer;
 
     public float health;
@@ -46,12 +48,12 @@ public class Boss : MonoBehaviour
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();
-
+    
         if (walkPointSet)
             agent.SetDestination(walkPoint);
-
+    
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
+    
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
@@ -61,13 +63,13 @@ public class Boss : MonoBehaviour
         //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-
+    
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
+    
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
-
+    
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
@@ -105,10 +107,12 @@ public class Boss : MonoBehaviour
     {
         health -= damage;
 
+        // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
     private void DestroyEnemy()
     {
+        // animator.SetTrigger("death");
         Destroy(gameObject);
     }
 
