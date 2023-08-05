@@ -15,7 +15,7 @@ public class Boss : MonoBehaviour
 
     public LayerMask whatIsPlayer;
 
-    public float health;
+    public int health;
 
     //Patroling
     public Vector3 walkPoint;
