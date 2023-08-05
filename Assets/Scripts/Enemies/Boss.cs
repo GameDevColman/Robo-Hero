@@ -1,12 +1,15 @@
 ﻿
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Boss : MonoBehaviour
 {
     public NavMeshAgent agent;
 
     public Transform player;
+    public HealthBar healthBar;
 
     // public Animator animator;
 
@@ -100,6 +103,7 @@ public class Boss : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        healthBar.SetHealth(health);
 
         // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);

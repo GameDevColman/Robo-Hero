@@ -8,7 +8,7 @@ public class Destroy : MonoBehaviour
     public bool IsPlayerFlash;
     private void Awake()
     {
-        attackPos = GameObject.Find("AttackPointtt").transform;
+        attackPos = GameObject.Find("AttackPoint").transform;
     }
     void Start()
     {
