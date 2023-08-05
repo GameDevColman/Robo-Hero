@@ -20,13 +20,13 @@ public class StateManagerScript : MonoBehaviour
     public void AddBullets(int quantity)
     {
         bulletsQuantity += quantity;
-        onBulletsQuantityChangedCallback.Invoke();
+        if (onBulletsQuantityChangedCallback != null) onBulletsQuantityChangedCallback.Invoke();
     }
     
     public void SubBullets(int quantity)
     {
         bulletsQuantity -= quantity;
-        onBulletsQuantityChangedCallback.Invoke();
+        if (onBulletsQuantityChangedCallback != null) onBulletsQuantityChangedCallback.Invoke();
     }
 
     public void TakeDamage()

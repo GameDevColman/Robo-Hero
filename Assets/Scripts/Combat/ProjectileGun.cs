@@ -1,26 +1,17 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
-/// Thanks for downloading my projectile gun script! :D
-/// Feel free to use it in any project you like!
-/// 
-/// The code is fully commented but if you still have any questions
-/// don't hesitate to write a yt comment
-/// or use the #coding-problems channel of my discord server
-/// 
-/// Dave
 public class ProjectileGun : MonoBehaviour
 {
     public bool shootingEnabled = true;
 
-    [Header("Attatch your bullet prefab")]
+    [Header("Attach your bullet prefab")]
     public GameObject bullet;
 
     //Gun stats
     public float shootForce, upwardForce;
-    public float timeBetweenShooting, spread, reloadTime, timeBetweenShots;
-    public int magazineSize, bulletsPerTap;
+    public float timeBetweenShooting, spread, timeBetweenShots;
+    public int bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
 
@@ -29,22 +20,23 @@ public class ProjectileGun : MonoBehaviour
     public float recoilForce;
 
     //some bools
-    bool shooting, readyToShoot, reloading;
+    bool shooting, readyToShoot;
 
     public Camera fpsCam;
     public GameObject muzzleFlash;
     public Transform attackPoint;
 
-    //Show bullet amount
     //public CamShake camShake;
     //public float camShakeMagnitude, camShakeDuration;
-    public TextMeshProUGUI text;
 
     public bool allowInvoke = true;
 
     private void Start()
     {
-        bulletsLeft = magazineSize;
+        // Todo: delete - only for testing
+        StateManagerScript.Instance.AddBullets(999);
+        
+        bulletsLeft = StateManagerScript.Instance.bulletsQuantity;
         readyToShoot = true;
     }
     void Update()
@@ -59,11 +51,9 @@ public class ProjectileGun : MonoBehaviour
         //Input
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
-
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
-
+        
         //Shoot
-        if (readyToShoot && shooting && !reloading && bulletsLeft > 0){
+        if (readyToShoot && shooting && bulletsLeft > 0){
             bulletsShot = bulletsPerTap;
             Shoot(); //Function has to be after bulletsShot = bulletsPerTap
         }
@@ -72,6 +62,7 @@ public class ProjectileGun : MonoBehaviour
     {
         if (!shootingEnabled) return;
 
+        StateManagerScript.Instance.SubBullets(1);
         readyToShoot = false;
 
         //Find the hit position using a raycast
@@ -130,17 +121,6 @@ public class ProjectileGun : MonoBehaviour
         readyToShoot = true;
         allowInvoke = true;
     }
-    private void Reload()
-    {
-        reloading = true;
-
-        Invoke("ReloadingFinished", reloadTime);
-    }
-    private void ReloadingFinished()
-    {
-        bulletsLeft = magazineSize;
-        reloading = false;
-    }
 
     #region Setters
 
@@ -160,11 +140,6 @@ public class ProjectileGun : MonoBehaviour
     public void SetSpread(float v)
     {
         spread = v;
-    }
-    public void SetMagazinSize (float v)
-    {
-        int _v = Mathf.RoundToInt(v);
-        magazineSize = _v;
     }
     public void SetBulletsPerTap(float v)
     {
