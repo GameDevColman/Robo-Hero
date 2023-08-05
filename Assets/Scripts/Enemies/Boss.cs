@@ -1,8 +1,6 @@
-﻿
-using System;
+﻿using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 public class Boss : MonoBehaviour
 {

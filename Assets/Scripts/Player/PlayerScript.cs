@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class PlayerScript : MonoBehaviour
     // public PlayerAttachedVolumeScript playerAttachedVolumeScript;
 
     private InventoryManagerScript m_inventoryManagerScript;
+    private StateManagerScript m_stateManagerScript;
     private Vector3 m_projectileDestination;
     private bool m_isLeftHand;
     private float m_timeToFire;
@@ -28,6 +31,8 @@ public class PlayerScript : MonoBehaviour
         Cursor.visible = false;
         m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript != null ?
             SceneManagerScript.Instance.inventoryManagerScript : InventoryManagerScript.Instance;
+        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript != null ?
+            SceneManagerScript.Instance.stateManagerScript : StateManagerScript.Instance;
     }
 
     void Update()
@@ -100,7 +105,21 @@ public class PlayerScript : MonoBehaviour
 
     public void KillPlayer()
     {
+        // Todo: add kill logic
         SceneManager.LoadScene(2);
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        {
+            TakeDamage();
+        }
+    }
+
+    private void TakeDamage()
+    {
+        m_stateManagerScript.TakeDamage();
     }
 
     // public void TakeStealthDamage(float damage)
