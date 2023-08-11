@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
+using UnityEngine.Events;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class PlayerScript : MonoBehaviour
 
     public bool isInDialog;
     public Camera playerCamera;
+    public Dialog dialog;
+    public UnityEvent actions = new UnityEvent();
     // public StealthStatScript stealthStatScript;
     // public PlayerAttachedVolumeScript playerAttachedVolumeScript;
 
@@ -57,7 +58,21 @@ public class PlayerScript : MonoBehaviour
     public void KillPlayer()
     {
         // Todo: add kill logic
-        SceneManager.LoadScene(2);
+        
+        actions.Invoke();
+        Destroy(GameObject.Find("GunContainer"));
+        Destroy(gameObject.GetComponent<FirstPersonController>());
+        Destroy(gameObject.GetComponent<CharacterController>());
+    }
+    
+    public void StartDialog()
+    {
+        SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
+    }
+
+    public void EndScene()
+    {
+        // Todo: add end scene logic
     }
 
     public void OnCollisionEnter(Collision collision)
