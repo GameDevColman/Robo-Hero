@@ -2,9 +2,12 @@
 using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Boss : MonoBehaviour
 {
+    public Dialog dialog;
+    public UnityEvent actions = new UnityEvent();
     public NavMeshAgent agent;
 
     public Transform player;
@@ -35,6 +38,16 @@ public class Boss : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+    }
+    
+    public void StartDialog()
+    {
+        SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
+    }
+
+    public void EndScene()
+    {
+        // Todo: add end scene logic
     }
 
     private void Update()
@@ -119,11 +132,12 @@ public class Boss : MonoBehaviour
         healthBar.SetHealth(health);
 
         // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (health <= 0) DestroyEnemy();
     }
     private void DestroyEnemy()
     {
         // animator.SetTrigger("death");
+        actions.Invoke();
         Destroy(gameObject);
     }
 
