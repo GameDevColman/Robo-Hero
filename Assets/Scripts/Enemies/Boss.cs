@@ -1,4 +1,5 @@
-﻿using CharacterState;
+﻿using System.Collections;
+using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,7 @@ public class Boss : MonoBehaviour
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
+    private bool isWaiting = false;
     public Transform wayPoints;
 
     //Attacking
@@ -37,13 +39,16 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
-        //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (!isWaiting)
+        {
+            //Check for sight and attack range
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
     }
 
     private void Patroling()
@@ -57,8 +62,18 @@ public class Boss : MonoBehaviour
     
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+        {
             walkPointSet = false;
+            StartCoroutine(WaitTime());
+        }
     }
+    
+    IEnumerator WaitTime() {
+        isWaiting = true;
+        yield return new WaitForSeconds(2f);
+        isWaiting = false;
+    }
+    
     private void SearchWalkPoint()
     {
         walkPoint = wayPoints.GetChild(Random.Range(0, wayPoints.childCount)).transform.position;
