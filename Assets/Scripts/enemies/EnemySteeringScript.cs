@@ -17,13 +17,7 @@ public class EnemySteeringScript : MonoBehaviour
     private Rigidbody _rigidBody;
     private EnemyInventory _enemyinventory;
 
-     //Attacking
-    public Transform player;
-    public UnityEngine.AI.NavMeshAgent agent;
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-    public GameObject projectile;
-
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
