@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
+using CharacterState;
+
 public class EnemySteeringScript : MonoBehaviour
 {
     [SerializeField] private Transform target;
@@ -14,6 +16,13 @@ public class EnemySteeringScript : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rigidBody;
     private EnemyInventory _enemyinventory;
+
+     //Attacking
+    public Transform player;
+    public UnityEngine.AI.NavMeshAgent agent;
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public GameObject projectile;
 
     private void Awake()
     {
@@ -37,6 +46,9 @@ public class EnemySteeringScript : MonoBehaviour
                 break;
             case AIState.Seek:
                 Seek();
+                break;
+            case AIState.Attack:
+                Attack();
                 break;
             case AIState.Idle:
                 Idle();
@@ -62,6 +74,7 @@ public class EnemySteeringScript : MonoBehaviour
         }
     }
 
+    // State for pursuiting/chasing the player
     private void Pursuit()
     {
         int iterationAhead = 30;
@@ -90,6 +103,9 @@ public class EnemySteeringScript : MonoBehaviour
 
     }
 
+    
+
+    // State for seeking the player
     private void Seek()
     { 
         Vector3 direction = target.position - transform.position;
@@ -104,5 +120,11 @@ public class EnemySteeringScript : MonoBehaviour
             _animator.SetBool("PlayerInRadius", true);
             currentState = AIState.Pursuit;
         }
+    }
+
+    private void Attack()
+    { 
+        Vector3 direction = target.position - transform.position;
+
     }
 }

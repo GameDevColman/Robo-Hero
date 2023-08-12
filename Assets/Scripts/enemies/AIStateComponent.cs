@@ -8,5 +8,5 @@ public class AIStateComponent : MonoBehaviour
 }
 
 [Serializable]
-public enum AIState { Idle, Seek, Flee, Arrive, Pursuit, Evade }
+public enum AIState { Idle, Seek, Flee, Arrive, Pursuit, Evade, Attack }
 
