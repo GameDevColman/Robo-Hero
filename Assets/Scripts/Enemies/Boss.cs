@@ -1,9 +1,13 @@
-﻿using CharacterState;
+﻿using System.Collections;
+using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Boss : MonoBehaviour
 {
+    public Dialog dialog;
+    public UnityEvent actions = new UnityEvent();
     public NavMeshAgent agent;
 
     public Transform player;
@@ -18,6 +22,7 @@ public class Boss : MonoBehaviour
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
+    private bool isWaiting = false;
     public Transform wayPoints;
 
     //Attacking
@@ -34,16 +39,29 @@ public class Boss : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
+    
+    public void StartDialog()
+    {
+        SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
+    }
+
+    public void EndScene()
+    {
+        // Todo: add end scene logic
+    }
 
     private void Update()
     {
-        //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (!isWaiting)
+        {
+            //Check for sight and attack range
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+            if (!playerInSightRange && !playerInAttackRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        }
     }
 
     private void Patroling()
@@ -57,8 +75,18 @@ public class Boss : MonoBehaviour
     
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+        {
             walkPointSet = false;
+            StartCoroutine(WaitTime());
+        }
     }
+    
+    IEnumerator WaitTime() {
+        isWaiting = true;
+        yield return new WaitForSeconds(2f);
+        isWaiting = false;
+    }
+    
     private void SearchWalkPoint()
     {
         walkPoint = wayPoints.GetChild(Random.Range(0, wayPoints.childCount)).transform.position;
@@ -104,11 +132,12 @@ public class Boss : MonoBehaviour
         healthBar.SetHealth(health);
 
         // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (health <= 0) DestroyEnemy();
     }
     private void DestroyEnemy()
     {
         // animator.SetTrigger("death");
+        actions.Invoke();
         Destroy(gameObject);
     }
 
