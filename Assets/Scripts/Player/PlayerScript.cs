@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        Cursor.visible = false;
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (isInDialog)
