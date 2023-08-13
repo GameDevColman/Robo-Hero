@@ -17,6 +17,13 @@ public class EnemySteeringScript : MonoBehaviour
     private Rigidbody _rigidBody;
     private EnemyInventory _enemyinventory;
 
+    //Attacking
+    public Transform player;
+    public UnityEngine.AI.NavMeshAgent agent;
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public GameObject projectile;
+
     
     private void Awake()
     {
@@ -117,8 +124,37 @@ public class EnemySteeringScript : MonoBehaviour
     }
 
     private void Attack()
-    { 
-        Vector3 direction = target.position - transform.position;
+    {
+        agent.SetDestination(transform.position);
 
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
+        {
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _enemyinventory.health -= damage;
+        _enemyinventory.healthBar.SetHealth( _enemyinventory.health);
+
+        // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
+        if (_enemyinventory.health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+    }
+    private void DestroyEnemy()
+    {
+        // animator.SetTrigger("death");
+        Destroy(gameObject);
     }
 }
