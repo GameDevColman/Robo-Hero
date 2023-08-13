@@ -78,6 +78,7 @@ public class EnemySteeringScript : MonoBehaviour
     // State for pursuiting/chasing the player
     private void Pursuit()
     {
+        Debug.Log("Pursuit");
         int iterationAhead = 30;
         Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
         Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
@@ -109,6 +110,7 @@ public class EnemySteeringScript : MonoBehaviour
     // State for seeking the player
     private void Seek()
     { 
+        Debug.Log("Seek");
         Vector3 direction = target.position - transform.position;
 
         direction.y = 0;
