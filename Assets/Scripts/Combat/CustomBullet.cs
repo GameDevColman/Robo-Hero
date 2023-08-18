@@ -50,8 +50,9 @@ public class CustomBullet : MonoBehaviour
         for (int i = 0; i < enemies.Length; i++)
         {
             //Get component of enemy and call Take Damage
-
-            enemies[i].GetComponent<Boss>().TakeDamage(explosionDamage);
+            
+            enemies[i].GetComponent<Boss>()?.TakeDamage(explosionDamage);
+            enemies[i].GetComponent<EnemySteeringScript>()?.TakeDamage(explosionDamage);
 
             //Add explosion force (if enemy has a rigidbody)
             if (enemies[i].GetComponent<Rigidbody>())

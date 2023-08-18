@@ -11,10 +11,10 @@ public class EnemySteeringScript : MonoBehaviour
     [SerializeField] private int pursuitDistance = 15;
 
     public AIState currentState;
+    public EnemyInventory _enemyinventory;
 
     private Animator _animator;
     private Rigidbody _rigidBody;
-    private EnemyInventory _enemyinventory;
 
     //Attacking
     public Transform player;
