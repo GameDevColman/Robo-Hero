@@ -163,12 +163,11 @@ public class EnemySteeringScript : MonoBehaviour
         _enemyinventory.health -= damage;
         _enemyinventory.healthBar.SetHealth(_enemyinventory.health);
 
-        if (_enemyinventory.health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); 
-        else _animator.SetBool("playerHit", true);
+        if (_enemyinventory.health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
     private void DestroyEnemy()
     {
-        // animator.SetTrigger("death");
-        Destroy(gameObject);
+        _animator.SetBool("playerHit", true);
+        // Destroy(gameObject);
     }
 }
