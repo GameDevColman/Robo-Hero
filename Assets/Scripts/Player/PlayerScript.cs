@@ -79,10 +79,10 @@ public class PlayerScript : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        /*if (collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
             TakeDamage();
-        }*/
+        }
     }
 
     private void TakeDamage()

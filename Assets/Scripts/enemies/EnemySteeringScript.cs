@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
-
 using CharacterState;
 
 public class EnemySteeringScript : MonoBehaviour
