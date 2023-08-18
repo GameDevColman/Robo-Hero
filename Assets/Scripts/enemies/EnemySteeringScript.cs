@@ -78,7 +78,6 @@ public class EnemySteeringScript : MonoBehaviour
         // Enemy is close enougth to attack
         if (direction.magnitude < attackingDistance)
         {
-            _animator.SetBool("ReadyToShoot", true);
             currentState = AIState.Attack;
         }
         // Enemy is still at pursuit distance
@@ -135,10 +134,12 @@ public class EnemySteeringScript : MonoBehaviour
             _animator.SetBool("ReadyToShoot", true);
             // Vector3 cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
             // GameObject newProjectile = Instantiate(projectile, cannonPos, Quaternion.identity);
+            //Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
+            //rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
         
-            Vector3 shootDirection = (player.transform.position - cannonPos).normalized;
+            //Vector3 shootDirection = (player.transform.position - cannonPos).normalized;
             Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(shootDirection * 2f, ForceMode.Impulse);
+            rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
