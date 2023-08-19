@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
-using CharacterState;
+using System.Collections;
 
 public class EnemySteeringScript : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float moveSpeed = 2;
     [SerializeField] private float rotationSpeed = 1;
-    [SerializeField] private int attackingDistance = 9;
+    [SerializeField] private int attackingDistance = 8;
     [SerializeField] private int pursuitDistance = 15;
 
     public AIState currentState;
@@ -49,26 +49,12 @@ public class EnemySteeringScript : MonoBehaviour
         }
     }
 
-    private void Idle()
-    {
-        int iterationAhead = 30;
-        Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
-        Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
-        Vector3 direction = targetFuturePosition - transform.position;
-        if (direction.magnitude > pursuitDistance)
-        {
-            currentState = AIState.Seek;
-        }
-        else if (direction.magnitude > attackingDistance)
-        {
-            currentState = AIState.Pursuit;
-        }
-    }
-
     // State for pursuiting/chasing the player
     private void Pursuit()
     {
-        Debug.Log("Pursuit");
+        _animator.SetBool("PlayerInRadius", true);
+        _animator.SetBool("ReadyToShoot", false);
+        
         int iterationAhead = 2;
         Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
         Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
@@ -99,8 +85,7 @@ public class EnemySteeringScript : MonoBehaviour
 
     // State for seeking the player
     private void Seek()
-    { 
-        Debug.Log("Seek");
+    {
         _animator.SetBool("ReadyToShoot", false);
         _animator.SetBool("PlayerInRadius", false);
         Vector3 direction = target.position - transform.position;
@@ -113,16 +98,16 @@ public class EnemySteeringScript : MonoBehaviour
             Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime;
             transform.position += moveVector;
         } else {
-            _animator.SetBool("PlayerInRadius", true);
             currentState = AIState.Pursuit;
         }
     }
 
     private void Attack()
     {
-        Debug.Log("Attack");
+        _animator.SetBool("ReadyToShoot", true);
+        _animator.SetBool("PlayerInRadius", true);
+        
         agent.SetDestination(transform.position);
-
         transform.LookAt(player);
 
         if (!alreadyAttacked)
@@ -131,7 +116,6 @@ public class EnemySteeringScript : MonoBehaviour
             // Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
             // rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
             // rb.AddForce(transform.up * 5f, ForceMode.Impulse);
-            _animator.SetBool("ReadyToShoot", true);
             // Vector3 cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
             // GameObject newProjectile = Instantiate(projectile, cannonPos, Quaternion.identity);
             //Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
@@ -148,10 +132,12 @@ public class EnemySteeringScript : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         int rndMistake = Random.Range(1, 5);
         // While player escaping, enemy gets tired
-        if (direction.magnitude > attackingDistance - rndMistake)
+        if (direction.magnitude > pursuitDistance - rndMistake)
         {
-            _animator.SetBool("ReadyToShoot", false);
             currentState = AIState.Seek;
+        } else if (direction.magnitude > attackingDistance - rndMistake)
+        {
+            currentState = AIState.Pursuit;
         }
     }
     private void ResetAttack()
@@ -169,6 +155,12 @@ public class EnemySteeringScript : MonoBehaviour
     private void DestroyEnemy()
     {
         _animator.SetBool("playerHit", true);
-        // Destroy(gameObject);
+        waiter();
+        //Destroy(gameObject);
+    }
+    
+    IEnumerator waiter()
+    {
+        yield return new WaitForSeconds(5);
     }
 }
