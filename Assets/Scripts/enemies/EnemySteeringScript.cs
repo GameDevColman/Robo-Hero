@@ -9,12 +9,13 @@ public class EnemySteeringScript : MonoBehaviour
     [SerializeField] private float rotationSpeed = 1;
     [SerializeField] private int attackingDistance = 8;
     [SerializeField] private int pursuitDistance = 15;
-
-    public AIState currentState;
-    public EnemyInventory _enemyinventory;
-
+    
     private Animator _animator;
     private Rigidbody _rigidBody;
+    
+    // Manage states
+    public AIState currentState;
+    public EnemyInventory enemyinventory;
 
     //Attacking
     public Transform player;
@@ -28,7 +29,6 @@ public class EnemySteeringScript : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody>();
-        //enemyHealth = GetComponent<EnemyInventoryScript>();
     }
 
     private void Update()
@@ -147,20 +147,14 @@ public class EnemySteeringScript : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _enemyinventory.health -= damage;
-        _enemyinventory.healthBar.SetHealth(_enemyinventory.health);
+        enemyinventory.health -= damage;
+        enemyinventory.healthBar.SetHealth(enemyinventory.health);
 
-        if (_enemyinventory.health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (enemyinventory.health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
     private void DestroyEnemy()
     {
         _animator.SetBool("playerHit", true);
-        waiter();
-        //Destroy(gameObject);
-    }
-    
-    IEnumerator waiter()
-    {
-        yield return new WaitForSeconds(5);
+        //Destroy(gameObject, 5);
     }
 }
