@@ -7,8 +7,8 @@ public class EnemySteeringScript : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float moveSpeed = 2;
     [SerializeField] private float rotationSpeed = 1;
-    [SerializeField] private int attackingDistance = 8;
-    [SerializeField] private int pursuitDistance = 15;
+    [SerializeField] private int attackingDistance = 10;
+    [SerializeField] private int pursuitDistance = 20;
     
     private Animator _animator;
     private Rigidbody _rigidBody;
@@ -55,19 +55,20 @@ public class EnemySteeringScript : MonoBehaviour
         _animator.SetBool("PlayerInRadius", true);
         _animator.SetBool("ReadyToShoot", false);
         
-        int iterationAhead = 2;
+        int iterationAhead = 30;
         Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
         Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
         Vector3 direction = targetFuturePosition - transform.position;
         direction.y = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
-        // Enemy is close enougth to attack
-        if (direction.magnitude < attackingDistance)
-        {
-            currentState = AIState.Attack;
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, 
+            Quaternion.LookRotation(direction), 
+            rotationSpeed * Time.deltaTime);
         // Enemy is still at pursuit distance
-        else if (direction.magnitude < pursuitDistance)
+        if (direction.magnitude + 7 > pursuitDistance)
+        {
+            currentState = AIState.Seek;
+        }
+        else if (direction.magnitude > attackingDistance)
         {
             Vector3 moveVector = direction.normalized * moveSpeed;
             moveVector.y = _rigidBody.velocity.y;
@@ -77,7 +78,7 @@ public class EnemySteeringScript : MonoBehaviour
         // Enemy is ar away, seek
         else
         {
-            currentState = AIState.Seek;
+            currentState = AIState.Attack;
         }
     }
 
@@ -109,23 +110,17 @@ public class EnemySteeringScript : MonoBehaviour
         
         agent.SetDestination(transform.position);
         transform.LookAt(player);
-
+        
         if (!alreadyAttacked)
         {
             var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
-            // Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
-            // rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
-            // rb.AddForce(transform.up * 5f, ForceMode.Impulse);
-            // Vector3 cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
-            // GameObject newProjectile = Instantiate(projectile, cannonPos, Quaternion.identity);
-            //Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
-            //rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
-        
-            //Vector3 shootDirection = (player.transform.position - cannonPos).normalized;
             Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
+            Vector3 shootingDirection = (player.transform.position - cannonPos).normalized;
+            float shootingForce = 15.0f;  // Adjust the force magnitude as needed
+            rb.AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
 
             alreadyAttacked = true;
+            Debug.Log("alreadyAttacked");
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
 
