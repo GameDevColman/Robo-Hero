@@ -64,7 +64,7 @@ public class EnemySteeringScript : MonoBehaviour
             Quaternion.LookRotation(direction), 
             rotationSpeed * Time.deltaTime);
         // Enemy is still at pursuit distance
-        if (direction.magnitude + 7 > pursuitDistance)
+        if (direction.magnitude + 5 > pursuitDistance)
         {
             currentState = AIState.Seek;
         }
@@ -113,11 +113,27 @@ public class EnemySteeringScript : MonoBehaviour
         
         if (!alreadyAttacked)
         {
-            var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
+            /*
+             var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
             Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
             Vector3 shootingDirection = (player.transform.position - cannonPos).normalized;
             float shootingForce = 15.0f;  // Adjust the force magnitude as needed
             rb.AddForce(shootingDirection * shootingForce, ForceMode.Impulse);
+            */
+            
+            var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
+            // cannonPos (-628.63, -98, -87.95)
+            // transform position (-630.70, 21.34, -481.40)
+            //Debug.Log(player.transform.position);
+            //Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
+            Vector3 vecPosition = cannonPos + Vector3.up * 2;
+            //rb.AddForce(shootingDirection, ForceMode.Impulse);
+            Debug.Log(vecPosition);
+            
+            Rigidbody instantiatedProjectile = Instantiate(projectile, cannonPos, transform.rotation).GetComponent<Rigidbody>();
+ 
+            instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,5));
+
 
             alreadyAttacked = true;
             Debug.Log("alreadyAttacked");
@@ -142,6 +158,7 @@ public class EnemySteeringScript : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(damage);
         enemyinventory.health -= damage;
         enemyinventory.healthBar.SetHealth(enemyinventory.health);
 
@@ -150,6 +167,6 @@ public class EnemySteeringScript : MonoBehaviour
     private void DestroyEnemy()
     {
         _animator.SetBool("playerHit", true);
-        //Destroy(gameObject, 5);
+        Destroy(gameObject, 10);
     }
 }
