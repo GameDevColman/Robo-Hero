@@ -31,8 +31,6 @@ public class SceneManagerScript : MonoBehaviour
         playerScript = FindObjectOfType<PlayerScript>();
         inventoryManagerScript = FindObjectOfType<InventoryManagerScript>();
         stateManagerScript = FindObjectOfType<StateManagerScript>();
-        
-        DontDestroyOnLoad(this.gameObject);
         // playerScript = PlayerScript.Instance;
         // inventoryManagerScript = InventoryManagerScript.Instance;
         // stateManagerScript = StateManagerScript.Instance;

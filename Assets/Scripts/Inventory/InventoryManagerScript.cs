@@ -26,10 +26,7 @@ public class InventoryManagerScript : MonoBehaviour
         else 
         { 
             Instance = this; 
-        } 
-        
-        DontDestroyOnLoad(this.gameObject);
-
+        }
     }
 
     public bool Add(Item item)

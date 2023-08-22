@@ -20,9 +20,7 @@ public class StateManagerScript : MonoBehaviour
         else 
         { 
             Instance = this; 
-        } 
-        
-        DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     public void AddBullets(int quantity)

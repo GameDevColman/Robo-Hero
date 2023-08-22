@@ -26,9 +26,6 @@ public class PlayerScript : MonoBehaviour
         { 
             Instance = this; 
         }
-        
-        DontDestroyOnLoad(this.gameObject);
-
     }
     
     private void Start()

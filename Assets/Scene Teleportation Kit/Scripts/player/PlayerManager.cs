@@ -14,7 +14,6 @@ namespace Scene_Teleportation_Kit.Scripts.player
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         void Start() {
