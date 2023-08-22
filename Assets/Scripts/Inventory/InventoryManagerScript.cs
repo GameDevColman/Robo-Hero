@@ -17,20 +17,6 @@ public class InventoryManagerScript : MonoBehaviour
     
     private const int ALPHA_KEY_OFFSET = 49;
 
-    public static InventoryManagerScript Instance { get; private set; } // static singleton
-    
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            Instance = this; 
-        }
-    }
-
     public bool Add(Item item)
     {
         if (items.Count >= space)

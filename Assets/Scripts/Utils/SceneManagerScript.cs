@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using StarterAssets;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -26,8 +22,21 @@ public class SceneManagerScript : MonoBehaviour
             Instance = this; 
         }
         dialogManagerScript = FindObjectOfType<DialogManagerScript>();
-        playerScript = FindObjectOfType<PlayerScript>();
+        InitSceneScripts();
         inventoryManagerScript = FindObjectOfType<InventoryManagerScript>();
         stateManagerScript = FindObjectOfType<StateManagerScript>();
+    }
+
+    public void InitSceneScripts()
+    {
+        playerScript = FindObjectOfType<PlayerScript>();
+    }
+
+    public static void DestroyAndLoadScene(int scene)
+    {
+        SceneManager.LoadScene(scene);
+        Cursor.visible = true;
+        Destroy(GameObject.Find("Canvas"));
+        Destroy(GameObject.Find("Managers"));
     }
 }

@@ -8,19 +8,19 @@ public class PlayerScript : MonoBehaviour
     public Camera playerCamera;
     public Dialog dialog;
     public UnityEvent actions = new UnityEvent();
-    public static PlayerScript Instance { get; private set; } // static singleton
-    
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            Instance = this; 
-        }
-    }
+    // public static PlayerScript Instance { get; private set; } // static singleton
+    //
+    // private void Awake()
+    // {
+    //     if (Instance != null && Instance != this) 
+    //     { 
+    //         Destroy(this); 
+    //     } 
+    //     else 
+    //     { 
+    //         Instance = this; 
+    //     }
+    // }
     
     private void Start()
     {

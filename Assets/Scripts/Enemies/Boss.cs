@@ -140,7 +140,7 @@ public class Boss : MonoBehaviour
         // animator.SetTrigger("death");
         actions.Invoke();
         Destroy(gameObject);
-        SceneManager.LoadScene(5);
+        SceneManagerScript.DestroyAndLoadScene(5);
     }
 
     private void OnDrawGizmosSelected()

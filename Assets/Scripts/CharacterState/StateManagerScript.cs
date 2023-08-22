@@ -9,20 +9,6 @@ public class StateManagerScript : MonoBehaviour
     public delegate void OnBulletsQuantityChanged();
     public OnBulletsQuantityChanged onBulletsQuantityChangedCallback;
 
-    public static StateManagerScript Instance { get; private set; } // static singleton
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) 
-        { 
-            Destroy(this); 
-        } 
-        else 
-        { 
-            Instance = this; 
-        }
-    }
-
     public void AddBullets(int quantity)
     {
         bulletsQuantity += quantity;
@@ -43,7 +29,7 @@ public class StateManagerScript : MonoBehaviour
         if (health == 0)
         {
             SceneManagerScript.Instance.playerScript.KillPlayer();
-            SceneManager.LoadScene(4);
+            SceneManagerScript.DestroyAndLoadScene(4);
         }
     }
 }
