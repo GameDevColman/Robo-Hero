@@ -17,6 +17,16 @@ public class EndSceneManager : MonoBehaviour
         }
     }
     
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            Debug.Log("HII");
+            actions.Invoke();
+            Destroy(gameObject.GetComponent<Collider>());
+        }
+    }
+    
     public void StartDialog()
     {
         SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
