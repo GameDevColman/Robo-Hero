@@ -1,11 +1,11 @@
 using CharacterState;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateManagerScript : MonoBehaviour
 {
     public int bulletsQuantity = 0;
     public int health = 100;
-    public HealthBar healthBar;
     public delegate void OnBulletsQuantityChanged();
     public OnBulletsQuantityChanged onBulletsQuantityChangedCallback;
 
@@ -38,11 +38,12 @@ public class StateManagerScript : MonoBehaviour
     public void TakeDamage()
     {
         health--;
-        healthBar.SetHealth(health);
+        GameObject.Find("HealthBar").GetComponent<HealthBar>().SetHealth(health);
 
         if (health == 0)
         {
             SceneManagerScript.Instance.playerScript.KillPlayer();
+            SceneManager.LoadScene(4);
         }
     }
 }

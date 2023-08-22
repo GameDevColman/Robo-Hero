@@ -98,15 +98,11 @@ public class DialogManagerScript : MonoBehaviour
     {
         if (SceneManagerScript.Instance.playerScript != null)
             SceneManagerScript.Instance.playerScript.isInDialog = true;
-        // if (SceneManagerScript.Instance.thirdPersonController != null)
-        //     SceneManagerScript.Instance.thirdPersonController.isInDialogue = true;
     }
 
     private void SetPlayerIsInDialogFalse()
     {
         if (SceneManagerScript.Instance.playerScript != null)
             SceneManagerScript.Instance.playerScript.isInDialog = false;
-        // if (SceneManagerScript.Instance.thirdPersonController != null)
-        //     SceneManagerScript.Instance.thirdPersonController.isInDialogue = false;
     }
 }

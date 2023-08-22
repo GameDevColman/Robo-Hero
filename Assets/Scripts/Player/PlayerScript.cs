@@ -4,16 +4,10 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class PlayerScript : MonoBehaviour
 {
-    private const int ALPHA_KEY_OFFSET = 49;
-
     public bool isInDialog;
     public Camera playerCamera;
     public Dialog dialog;
     public UnityEvent actions = new UnityEvent();
-
-    private InventoryManagerScript m_inventoryManagerScript;
-    private StateManagerScript m_stateManagerScript;
-
     public static PlayerScript Instance { get; private set; } // static singleton
     
     private void Awake()
@@ -31,8 +25,6 @@ public class PlayerScript : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
-        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript;
-        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript;
     }
 
     void Update()
@@ -62,11 +54,11 @@ public class PlayerScript : MonoBehaviour
     {
         SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
     }
-
-    public void EndScene()
-    {
-        // Todo: add end scene logic
-    }
+    //
+    // public void EndScene()
+    // {
+    //     // Todo: add end scene logic
+    // }
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -78,6 +70,6 @@ public class PlayerScript : MonoBehaviour
 
     private void TakeDamage()
     {
-        m_stateManagerScript.TakeDamage();
+        SceneManagerScript.Instance.stateManagerScript.TakeDamage();
     }
 }

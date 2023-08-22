@@ -21,7 +21,6 @@ public class EndSceneManager : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            Debug.Log("HII");
             actions.Invoke();
             Destroy(gameObject.GetComponent<Collider>());
         }

@@ -3,6 +3,7 @@ using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -139,6 +140,7 @@ public class Boss : MonoBehaviour
         // animator.SetTrigger("death");
         actions.Invoke();
         Destroy(gameObject);
+        SceneManager.LoadScene(5);
     }
 
     private void OnDrawGizmosSelected()
