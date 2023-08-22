@@ -6,7 +6,6 @@ public class NpcDialogScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("GOT TO TRIGGER");
         if (other.CompareTag("Player"))
         {
             StartDialog();

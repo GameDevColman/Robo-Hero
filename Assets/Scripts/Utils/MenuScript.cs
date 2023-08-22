@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
 {
     public Canvas exitMenuCanvas;
-    public Canvas playMenuCanvas;
+    // public Canvas playMenuCanvas;
     public Button playButton;
     public Button exitButton;
 
     private void Start()
     {
         exitMenuCanvas.enabled = false;
-        playMenuCanvas.enabled = false;
+        // playMenuCanvas.enabled = false;
     }
 
     public void onExitButtonClicked()
@@ -34,16 +34,16 @@ public class MenuScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void onPlayButtonClicked()
-    {
-        playMenuCanvas.enabled = true;
-        playButton.enabled = false;
-        exitButton.enabled = false;
-    }
+    // public void onPlayButtonClicked()
+    // {
+    //     playMenuCanvas.enabled = true;
+    //     playButton.enabled = false;
+    //     exitButton.enabled = false;
+    // }
 
     public void onClosePlayMenuButtonClicked()
     {
-        playMenuCanvas.enabled = false;
+        // playMenuCanvas.enabled = false;
         playButton.enabled = true;
         exitButton.enabled = true;
     }

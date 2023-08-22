@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
@@ -34,9 +36,12 @@ public class SceneManagerScript : MonoBehaviour
 
     public static void DestroyAndLoadScene(int scene)
     {
-        SceneManager.LoadScene(scene);
+        foreach (GameObject o in FindObjectsOfType<GameObject>()) {
+            Destroy(o);
+        }
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
         Cursor.visible = true;
-        Destroy(GameObject.Find("Canvas"));
-        Destroy(GameObject.Find("Managers"));
+        // Destroy(GameObject.Find("Canvas"));
+        // Destroy(GameObject.Find("Managers"));
     }
 }
