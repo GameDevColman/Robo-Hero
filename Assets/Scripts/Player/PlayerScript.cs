@@ -10,19 +10,32 @@ public class PlayerScript : MonoBehaviour
     public Camera playerCamera;
     public Dialog dialog;
     public UnityEvent actions = new UnityEvent();
-    // public StealthStatScript stealthStatScript;
-    // public PlayerAttachedVolumeScript playerAttachedVolumeScript;
 
     private InventoryManagerScript m_inventoryManagerScript;
     private StateManagerScript m_stateManagerScript;
 
+    public static PlayerScript Instance { get; private set; } // static singleton
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        }
+        
+        DontDestroyOnLoad(this.gameObject);
+
+    }
+    
     private void Start()
     {
         Cursor.visible = false;
-        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript != null ?
-            SceneManagerScript.Instance.inventoryManagerScript : InventoryManagerScript.Instance;
-        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript != null ?
-            SceneManagerScript.Instance.stateManagerScript : StateManagerScript.Instance;
+        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript;
+        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript;
     }
 
     void Update()

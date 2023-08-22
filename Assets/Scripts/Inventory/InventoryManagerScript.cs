@@ -19,8 +19,17 @@ public class InventoryManagerScript : MonoBehaviour
     
     private void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else { Destroy(gameObject); }
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
+        
+        DontDestroyOnLoad(this.gameObject);
+
     }
 
     public bool Add(Item item)

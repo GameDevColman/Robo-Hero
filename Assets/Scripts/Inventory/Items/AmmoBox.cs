@@ -13,7 +13,7 @@ namespace Inventory.Items
             if (collision.collider.CompareTag("Player"))
             {
                 SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
-                StateManagerScript.Instance.AddBullets(BulletsQuantity);
+                SceneManagerScript.Instance.stateManagerScript.AddBullets(BulletsQuantity);
                 Destroy(gameObject);
             }
         }

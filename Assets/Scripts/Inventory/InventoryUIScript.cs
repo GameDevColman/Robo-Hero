@@ -11,8 +11,7 @@ public class InventoryUIScript : MonoBehaviour
 
     void Start()
     {
-        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript != null ?
-            SceneManagerScript.Instance.inventoryManagerScript : InventoryManagerScript.Instance;
+        m_inventoryManagerScript = SceneManagerScript.Instance.inventoryManagerScript;
         m_inventoryManagerScript.onItemChangedCallback += UpdateUI;
         m_inventoryManagerScript.onItemUsedCallback += UpdateSlot;
         m_inventorySlots = inventorySlots.GetComponentsInChildren<InventorySlotScript>();

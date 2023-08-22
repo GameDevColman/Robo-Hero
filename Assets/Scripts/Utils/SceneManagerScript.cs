@@ -18,13 +18,23 @@ public class SceneManagerScript : MonoBehaviour
     public static SceneManagerScript Instance { get; private set; } // static singleton
     void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else { Destroy(gameObject); }
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        }
         // Cache references to all desired variables
         dialogManagerScript = FindObjectOfType<DialogManagerScript>();
         playerScript = FindObjectOfType<PlayerScript>();
-        // firstPersonController = FindObjectOfType<FirstPersonController>();
-        inventoryManagerScript = InventoryManagerScript.Instance;
-        stateManagerScript = StateManagerScript.Instance;
+        inventoryManagerScript = FindObjectOfType<InventoryManagerScript>();
+        stateManagerScript = FindObjectOfType<StateManagerScript>();
+        
+        DontDestroyOnLoad(this.gameObject);
+        // playerScript = PlayerScript.Instance;
+        // inventoryManagerScript = InventoryManagerScript.Instance;
+        // stateManagerScript = StateManagerScript.Instance;
     }
 }

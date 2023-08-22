@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class StateUIScript : MonoBehaviour
 {
-    public Text bulletsQuantity;
+    private Text bulletsQuantity;
     private StateManagerScript m_stateManagerScript;
 
     void Start()
     {
-        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript != null ?
-            SceneManagerScript.Instance.stateManagerScript : StateManagerScript.Instance;
+        m_stateManagerScript = SceneManagerScript.Instance.stateManagerScript;
+        bulletsQuantity = GameObject.Find("QuantityText").GetComponent<Text>();
         m_stateManagerScript.onBulletsQuantityChangedCallback += ChangeBulletsQuantity;
         ChangeBulletsQuantity();
     }

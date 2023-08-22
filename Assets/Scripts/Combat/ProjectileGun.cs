@@ -33,18 +33,12 @@ public class ProjectileGun : MonoBehaviour
 
     private void Start()
     {
-        // Todo: delete - only for testing
-        StateManagerScript.Instance.AddBullets(999);
-        
-        bulletsLeft = StateManagerScript.Instance.bulletsQuantity;
+        bulletsLeft = SceneManagerScript.Instance.stateManagerScript.bulletsQuantity;
         readyToShoot = true;
     }
     void Update()
     {
         MyInput();
-
-        //Set Text
-        // text.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
     }
     private void MyInput()
     {
@@ -62,7 +56,7 @@ public class ProjectileGun : MonoBehaviour
     {
         if (!shootingEnabled) return;
 
-        StateManagerScript.Instance.SubBullets(1);
+        SceneManagerScript.Instance.stateManagerScript.SubBullets(1);
         readyToShoot = false;
 
         //Find the hit position using a raycast
