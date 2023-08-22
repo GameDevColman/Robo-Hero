@@ -29,4 +29,10 @@ public class InventorySlotScript : MonoBehaviour
     {
         GetComponent<Image>().color = Color.black;
     }
+
+    public void UpdateColor()
+    {
+        GetComponent<Image>().color = GetComponent<Image>().color == Color.black ? 
+            new Color(0.3686274509803922f, 0, 0.3686274509803922f, 1) : Color.black;
+    }
 }

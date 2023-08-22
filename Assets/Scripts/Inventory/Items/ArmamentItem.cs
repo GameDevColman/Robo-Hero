@@ -1,30 +1,29 @@
-using Inventory.Items;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/ArmamentItem")]
-public class ArmamentItem : Item
+namespace Inventory.Items
 {
-    public GameObject armamentPrefab;
-    public AudioClip successUsingItemAudio;
-
-    public override void Use()
+    [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/ArmamentItem")]
+    public class ArmamentItem : Item
     {
-        if (!base.isUsed)
+        public GameObject armamentPrefab;
+        public AudioClip successUsingItemAudio;
+
+        public override void Use()
         {
-        base.Use();
-        // Collider[] hits = Physics.OverlapSphere(SceneManagerScript.Instance.playerScript.transform.position, 2f);
-        // if (hits.Length > 0)
-        // {
-            // foreach (Collider hit in hits)
-            // {
+            if (!isUsed)
+            {
                 Transform playerTransform = SceneManagerScript.Instance.playerScript.transform;
-                Instantiate(armamentPrefab, playerTransform.position + playerTransform.TransformDirection(new Vector3(0, -0.5f, 1f)), playerTransform.rotation);
+                // Instantiate(armamentPrefab, playerTransform.position + playerTransform.TransformDirection(new Vector3(0, -0.5f, 1f)), playerTransform.rotation);
                 SceneManagerScript.Instance.inventoryManagerScript.Use(this);
                 if (successUsingItemAudio) 
                     AudioSource.PlayClipAtPoint(successUsingItemAudio, playerTransform.transform.position);
-            // }
-        // }
+            }
+            else
+            {
+                SceneManagerScript.Instance.inventoryManagerScript.Unuse(this);
+            }
+            
+            base.Use();
         }
     }
 }

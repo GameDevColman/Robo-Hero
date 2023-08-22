@@ -37,10 +37,10 @@ public class InventoryUIScript : MonoBehaviour
     {
         for (int i = 0; i < m_inventorySlots.Length; i++)
         {
-            m_inventorySlots[i].UnuseItem();
+            // m_inventorySlots[i].UnuseItem();
             if (item == m_inventorySlots[i].item)
             {
-                m_inventorySlots[i].UseItem();
+                m_inventorySlots[i].UpdateColor();
             }
         }
     }
