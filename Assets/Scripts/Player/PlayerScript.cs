@@ -46,25 +46,6 @@ public class PlayerScript : MonoBehaviour
                 SceneManagerScript.Instance.dialogManagerScript.DisplayNextSentence();
             }
         }
-
-        initInventorySlotsKeyDown();
-    }
-
-    private void initInventorySlotsKeyDown()
-    {
-        for (int i = 0; i < m_inventoryManagerScript.items.Count; i++)
-        {
-            handleInventorySlotKeyDown((KeyCode)(i + ALPHA_KEY_OFFSET));
-        }
-    }
-    
-    private void handleInventorySlotKeyDown(KeyCode keyCode)
-    {
-        if (Input.GetKeyDown(keyCode))
-        {
-            int inventorySlotPressed = ((int)keyCode) - ALPHA_KEY_OFFSET;
-            m_inventoryManagerScript.items[inventorySlotPressed].Use() ;
-        }
     }
 
     public void KillPlayer()

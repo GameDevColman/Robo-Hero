@@ -15,6 +15,8 @@ public class InventoryManagerScript : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
     public OnItemUsed onItemUsedCallback;
     
+    private const int ALPHA_KEY_OFFSET = 49;
+
     public static InventoryManagerScript Instance { get; private set; } // static singleton
     
     private void Awake()
@@ -34,6 +36,7 @@ public class InventoryManagerScript : MonoBehaviour
         if (items.Count >= space)
             return false;
 
+        item.isUsed = false;
         items.Add(item);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
@@ -49,15 +52,19 @@ public class InventoryManagerScript : MonoBehaviour
     
     public void Use(Item item)
     {
-        Unuse(items.Find(i => i.isUsed));
-        // items.Find(i => i == item).isUsed = true;
+        var usedItem = items.Find(i => i.isUsed && i != item);
+        if (usedItem != null)
+        {
+            usedItem.isUsed = false;
+            Unuse(usedItem);
+        }
+        
         if (onItemUsedCallback != null)
             onItemUsedCallback.Invoke(item);
     }
 
     public void Unuse(Item item)
     {
-        // items.Find(i => i == item).isUsed = true;
         if (onItemUsedCallback != null && item != null)
             onItemUsedCallback.Invoke(item);
     }
@@ -67,6 +74,25 @@ public class InventoryManagerScript : MonoBehaviour
         if (Input.GetKeyDown("i"))
         {
             inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
+        }
+
+        initInventorySlotsKeyDown();
+    }
+    
+    private void initInventorySlotsKeyDown()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            handleInventorySlotKeyDown((KeyCode)(i + ALPHA_KEY_OFFSET));
+        }
+    }
+    
+    private void handleInventorySlotKeyDown(KeyCode keyCode)
+    {
+        if (Input.GetKeyDown(keyCode))
+        {
+            int inventorySlotPressed = ((int)keyCode) - ALPHA_KEY_OFFSET;
+            items[inventorySlotPressed].ChangeUsage();
         }
     }
 }

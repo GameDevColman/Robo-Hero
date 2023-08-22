@@ -9,9 +9,9 @@ namespace Inventory.Items
         // Using `new` is overriding the default `name` property for object
         new public string name = "New Item";
         public Sprite icon = null;
-        [NonSerialized] public bool isUsed = false;
+        public bool isUsed = false;
 
-        public virtual void Use()
+        public virtual void ChangeUsage()
         {
             isUsed = !isUsed;
             if (isUsed) Debug.Log("using item: " + name);

@@ -8,7 +8,7 @@ namespace Inventory.Items
         public GameObject armamentPrefab;
         public AudioClip successUsingItemAudio;
 
-        public override void Use()
+        public override void ChangeUsage()
         {
             if (!isUsed)
             {
@@ -23,7 +23,7 @@ namespace Inventory.Items
                 SceneManagerScript.Instance.inventoryManagerScript.Unuse(this);
             }
             
-            base.Use();
+            base.ChangeUsage();
         }
     }
 }
