@@ -14,6 +14,8 @@ public class InventoryManagerScript : MonoBehaviour
     public delegate void OnItemUsed(Item item);
     public OnItemChanged onItemChangedCallback;
     public OnItemUsed onItemUsedCallback;
+    
+    private const int ALPHA_KEY_OFFSET = 49;
 
     public static InventoryManagerScript Instance { get; private set; } // static singleton
     
@@ -60,6 +62,20 @@ public class InventoryManagerScript : MonoBehaviour
         if (Input.GetKeyDown("i"))
         {
             inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
+        }
+        
+        for (int i = 0; i < items.Count; i++)
+        {
+            handleInventorySlotKeyDown((KeyCode)(i + ALPHA_KEY_OFFSET));
+        }
+    }
+
+    private void handleInventorySlotKeyDown(KeyCode keyCode)
+    {
+        if (Input.GetKeyDown(keyCode))
+        {
+            int inventorySlotPressed = ((int)keyCode) - ALPHA_KEY_OFFSET;
+            items[inventorySlotPressed].Use();
         }
     }
 }

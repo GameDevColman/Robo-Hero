@@ -14,6 +14,5 @@ namespace Inventory.Items
             isUsed = true;
             Debug.Log("using item: " + name);
         }
-
     }
 }
