@@ -9,20 +9,9 @@ public class ExplodeGem : MonoBehaviour
     public float minForce;
     public float maxForce;
     public float radius;
-    
-    // Player
-    public Transform player;
-    
+
     // Audio
     public AudioClip collectionSound;
-    
-    // Manage bullets
-    public StateManagerScript stateManagerScript;
-
-    private void Start()
-    {
-        var stateManagerScript = FindObjectOfType<StateManagerScript>();
-    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -41,7 +30,7 @@ public class ExplodeGem : MonoBehaviour
             {
                 Vector3 tPos = transform.position + Vector3.forward;
                 AudioSource.PlayClipAtPoint(collectionSound, tPos);
-                stateManagerScript.AddBullets(10);
+                SceneManagerScript.Instance.stateManagerScript.AddBullets(10);
                 rb.AddExplosionForce(Random.Range(minForce, maxForce), tPos, radius);
                 Destroy(t.gameObject, destroyDelay);
             }
