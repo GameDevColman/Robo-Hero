@@ -17,7 +17,6 @@ public class ExplodeGem : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("collision");
             Explode();
         }
     }
