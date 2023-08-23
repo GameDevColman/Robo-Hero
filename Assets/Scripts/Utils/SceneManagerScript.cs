@@ -44,4 +44,9 @@ public class SceneManagerScript : MonoBehaviour
         // Destroy(GameObject.Find("Canvas"));
         // Destroy(GameObject.Find("Managers"));
     }
+
+    public bool IsUseEnabled()
+    {
+        return SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 3;
+    }
 }

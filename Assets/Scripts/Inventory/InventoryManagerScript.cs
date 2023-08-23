@@ -44,15 +44,26 @@ public class InventoryManagerScript : MonoBehaviour
             usedItem.isUsed = false;
             Unuse(usedItem);
         }
-        
+
         if (onItemUsedCallback != null)
-            onItemUsedCallback.Invoke(item);
+        {
+            ChangeItemUsage(item, true);
+        }
+    }
+
+    private void ChangeItemUsage(Item item, bool isUsed)
+    {
+        GameObject.Find("GunContainer").transform.Find(item.name).gameObject.SetActive(isUsed);
+        GameObject.Find("AimCanvas").transform.Find("Aim").gameObject.SetActive(isUsed);
+        onItemUsedCallback.Invoke(item);
     }
 
     public void Unuse(Item item)
     {
         if (onItemUsedCallback != null && item != null)
-            onItemUsedCallback.Invoke(item);
+        {
+            ChangeItemUsage(item, false);
+        }
     }
 
     void Update()
@@ -62,7 +73,7 @@ public class InventoryManagerScript : MonoBehaviour
             inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
         }
 
-        initInventorySlotsKeyDown();
+        if (SceneManagerScript.Instance.IsUseEnabled()) initInventorySlotsKeyDown();
     }
     
     private void initInventorySlotsKeyDown()
