@@ -12,6 +12,9 @@ public class MenuScript : MonoBehaviour
     private void Start()
     {
         exitMenuCanvas.enabled = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 1;
         // playMenuCanvas.enabled = false;
     }
 
