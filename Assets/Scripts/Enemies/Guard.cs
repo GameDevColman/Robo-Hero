@@ -80,6 +80,7 @@ public class Guard : MonoBehaviour {
 
 		while (!animator.GetBool("Kill")) {
 			transform.position = Vector3.MoveTowards (transform.position, targetWaypoint, speed * Time.deltaTime);
+			if (Mathf.Abs(Vector3.Distance(transform.position, targetWaypoint)) > 30) transform.position = targetWaypoint;
 			if (Mathf.Abs(Vector3.Distance(transform.position, targetWaypoint)) <= 0.5)
 				transform.position = targetWaypoint;
 			if (transform.position == targetWaypoint) {
