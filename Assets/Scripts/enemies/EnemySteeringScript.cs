@@ -143,6 +143,7 @@ public class EnemySteeringScript : MonoBehaviour
     private void DestroyEnemy()
     {
         _animator.SetBool("playerHit", true);
-        Destroy(gameObject, 2.6f);
+        _animator.SetBool("ReadyToShoot", false);
+        Destroy(gameObject, 2.5f);
     }
 }
