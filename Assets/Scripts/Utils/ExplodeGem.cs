@@ -9,6 +9,8 @@ public class ExplodeGem : MonoBehaviour
     public float minForce;
     public float maxForce;
     public float radius;
+    public int gainedQuantity;
+    public bool isLife;
 
     // Audio
     public AudioClip collectionSound;
@@ -30,7 +32,14 @@ public class ExplodeGem : MonoBehaviour
             {
                 Vector3 tPos = transform.position + Vector3.forward;
                 AudioSource.PlayClipAtPoint(collectionSound, tPos);
-                SceneManagerScript.Instance.stateManagerScript.AddBullets(10);
+                if (isLife)
+                {
+                    SceneManagerScript.Instance.stateManagerScript.AddLife(gainedQuantity);
+                }
+                else
+                {
+                    SceneManagerScript.Instance.stateManagerScript.AddBullets(gainedQuantity);
+                }
                 rb.AddExplosionForce(Random.Range(minForce, maxForce), tPos, radius);
                 Destroy(t.gameObject, destroyDelay);
             }

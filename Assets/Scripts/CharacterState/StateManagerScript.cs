@@ -32,4 +32,10 @@ public class StateManagerScript : MonoBehaviour
             SceneManagerScript.DestroyAndLoadScene(4);
         }
     }
+    
+    public void AddLife(int quantity)
+    {
+        health += quantity;
+        GameObject.Find("HealthBar").GetComponent<HealthBar>().SetHealth(health);
+    }
 }
