@@ -115,14 +115,11 @@ public class EnemySteeringScript : MonoBehaviour
         if (!alreadyAttacked)
         {
             var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
-            Vector3 vecPosition = cannonPos + Vector3.up * 2;
+
+            Rigidbody rb = Instantiate(projectile, cannonPos, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.velocity = transform.TransformDirection(new Vector3(0, 2,0));
+            rb.AddForce(player.transform.position - cannonPos, ForceMode.Impulse);
             
-            Rigidbody instantiatedProjectile = Instantiate(projectile, 
-                cannonPos, transform.rotation).GetComponent<Rigidbody>();
- 
-            instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,5));
-
-
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
