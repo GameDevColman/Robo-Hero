@@ -3,7 +3,6 @@ using CharacterState;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -44,11 +43,6 @@ public class Boss : MonoBehaviour
     public void StartDialog()
     {
         SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
-    }
-
-    public void EndScene()
-    {
-        // Todo: add end scene logic
     }
 
     private void Update()
@@ -132,12 +126,10 @@ public class Boss : MonoBehaviour
         health -= damage;
         healthBar.SetHealth(health);
 
-        // if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f); else animator.SetTrigger("damage");
         if (health <= 0) DestroyEnemy();
     }
     private void DestroyEnemy()
     {
-        // animator.SetTrigger("death");
         actions.Invoke();
         Destroy(gameObject);
         SceneManagerScript.DestroyAndLoadScene(5);

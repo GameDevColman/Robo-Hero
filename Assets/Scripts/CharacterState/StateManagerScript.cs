@@ -36,6 +36,7 @@ public class StateManagerScript : MonoBehaviour
     public void AddLife(int quantity)
     {
         health += quantity;
+        if (health > 100) health = 100;
         GameObject.Find("HealthBar").GetComponent<HealthBar>().SetHealth(health);
     }
 }

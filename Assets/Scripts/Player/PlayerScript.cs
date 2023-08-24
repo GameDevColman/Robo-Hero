@@ -8,20 +8,7 @@ public class PlayerScript : MonoBehaviour
     public Camera playerCamera;
     public Dialog dialog;
     public UnityEvent actions = new UnityEvent();
-    // public static PlayerScript Instance { get; private set; } // static singleton
-    //
-    // private void Awake()
-    // {
-    //     if (Instance != null && Instance != this) 
-    //     { 
-    //         Destroy(this); 
-    //     } 
-    //     else 
-    //     { 
-    //         Instance = this; 
-    //     }
-    // }
-    
+
     private void Start()
     {
         Cursor.visible = false;
@@ -42,8 +29,6 @@ public class PlayerScript : MonoBehaviour
 
     public void KillPlayer()
     {
-        // Todo: add kill logic
-        
         actions.Invoke();
         Destroy(GameObject.Find("GunContainer"));
         Destroy(gameObject.GetComponent<FirstPersonController>());
@@ -54,11 +39,6 @@ public class PlayerScript : MonoBehaviour
     {
         SceneManagerScript.Instance.dialogManagerScript.StartDialog(dialog);
     }
-    //
-    // public void EndScene()
-    // {
-    //     // Todo: add end scene logic
-    // }
 
     public void OnCollisionEnter(Collision collision)
     {

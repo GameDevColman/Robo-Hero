@@ -7,6 +7,7 @@ public class ProjectileGun : MonoBehaviour
 
     [Header("Attach your bullet prefab")]
     public GameObject bullet;
+    public AudioClip shootSound;
 
     //Gun stats
     public float shootForce, upwardForce;
@@ -91,9 +92,9 @@ public class ProjectileGun : MonoBehaviour
         if (currentBullet.GetComponent<CustomProjectiles>()) currentBullet.GetComponent<CustomProjectiles>().activated = true;
 
         Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-
-        //Shake Camera
-        //camShake.StartCoroutine(camShake.Shake(camShakeDuration, camShakeMagnitude));
+        
+        if (shootSound) 
+            AudioSource.PlayClipAtPoint(shootSound, attackPoint.transform.position);
 
         bulletsLeft--;
         bulletsShot--;

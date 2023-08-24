@@ -73,23 +73,31 @@ public class InventoryManagerScript : MonoBehaviour
             inventory.gameObject.SetActive(!inventory.gameObject.activeSelf);
         }
 
-        if (SceneManagerScript.Instance.IsUseEnabled()) initInventorySlotsKeyDown();
+        if (SceneManagerScript.Instance.IsUseEnabled()) InitInventorySlotsKeyDown();
     }
     
-    private void initInventorySlotsKeyDown()
+    private void InitInventorySlotsKeyDown()
     {
         for (int i = 0; i < items.Count; i++)
         {
-            handleInventorySlotKeyDown((KeyCode)(i + ALPHA_KEY_OFFSET));
+            HandleInventorySlotKeyDown((KeyCode)(i + ALPHA_KEY_OFFSET));
         }
     }
     
-    private void handleInventorySlotKeyDown(KeyCode keyCode)
+    private void HandleInventorySlotKeyDown(KeyCode keyCode)
     {
         if (Input.GetKeyDown(keyCode))
         {
             int inventorySlotPressed = ((int)keyCode) - ALPHA_KEY_OFFSET;
             items[inventorySlotPressed].ChangeUsage();
+        }
+    }
+
+    public void RemoveUsedItem()
+    {
+        foreach (Item item in items)
+        {
+            if (item.isUsed) item.ChangeUsage();
         }
     }
 }

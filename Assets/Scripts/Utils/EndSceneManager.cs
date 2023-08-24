@@ -33,6 +33,7 @@ public class EndSceneManager : MonoBehaviour
 
     public void EndScene(int sceneIndex)
     {
+        SceneManagerScript.Instance.inventoryManagerScript.RemoveUsedItem();
         StartCoroutine(MoveToEndSceneAfterDelay(2f, sceneIndex));
     }
 
