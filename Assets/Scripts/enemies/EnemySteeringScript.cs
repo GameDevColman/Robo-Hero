@@ -6,7 +6,6 @@ public class EnemySteeringScript : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float moveSpeed = 2;
-    [SerializeField] private float rotationSpeed = 1;
     [SerializeField] private int attackingDistance = 10;
     [SerializeField] private int pursuitDistance = 20;
     
@@ -144,6 +143,6 @@ public class EnemySteeringScript : MonoBehaviour
     private void DestroyEnemy()
     {
         _animator.SetBool("playerHit", true);
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 2.6f);
     }
 }
