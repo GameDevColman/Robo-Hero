@@ -54,7 +54,7 @@ public class EnemySteeringScript : MonoBehaviour
     {
         _animator.SetBool("PlayerInRadius", true);
         _animator.SetBool("ReadyToShoot", false);
-        
+
         int iterationAhead = 30;
         Vector3 targetSpeed = target.gameObject.GetComponent<FirstPersonController>().instantVelocity;
         Vector3 targetFuturePosition = target.transform.position + (targetSpeed * iterationAhead);
@@ -63,19 +63,20 @@ public class EnemySteeringScript : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, 
             Quaternion.LookRotation(direction), 
             rotationSpeed * Time.deltaTime);
-        // Enemy is still at pursuit distance
-        if (direction.magnitude + 5 > pursuitDistance)
+        // Enemy is far away from player
+        if (direction.magnitude > pursuitDistance)
         {
             currentState = AIState.Seek;
         }
+        // Enemy should pursuit
         else if (direction.magnitude > attackingDistance)
         {
-            Vector3 moveVector = direction.normalized * moveSpeed;
+            Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime;
             moveVector.y = _rigidBody.velocity.y;
             transform.position += moveVector;
             _rigidBody.velocity = moveVector;
         }
-        // Enemy is ar away, seek
+        // Enemy can attack
         else
         {
             currentState = AIState.Attack;
@@ -96,7 +97,7 @@ public class EnemySteeringScript : MonoBehaviour
         Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
         if (direction.magnitude > pursuitDistance)
         {
-            Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime;
+            Vector3 moveVector = direction.normalized * moveSpeed * Time.deltaTime * 2;
             transform.position += moveVector;
         } else {
             currentState = AIState.Pursuit;
@@ -116,7 +117,8 @@ public class EnemySteeringScript : MonoBehaviour
             var cannonPos = GameObject.FindGameObjectWithTag("EnemyCannon").transform.position;
             Vector3 vecPosition = cannonPos + Vector3.up * 2;
             
-            Rigidbody instantiatedProjectile = Instantiate(projectile, cannonPos, transform.rotation).GetComponent<Rigidbody>();
+            Rigidbody instantiatedProjectile = Instantiate(projectile, 
+                cannonPos, transform.rotation).GetComponent<Rigidbody>();
  
             instantiatedProjectile.velocity = transform.TransformDirection(new Vector3(0, 0,5));
 
@@ -126,12 +128,9 @@ public class EnemySteeringScript : MonoBehaviour
         }
 
         Vector3 direction = target.position - transform.position;
-        int rndMistake = Random.Range(1, 5);
+        int rndMistake = Random.Range(1, 8);
         // While player escaping, enemy gets tired
-        if (direction.magnitude > pursuitDistance - rndMistake)
-        {
-            currentState = AIState.Seek;
-        } else if (direction.magnitude > attackingDistance - rndMistake)
+        if (direction.magnitude + rndMistake > attackingDistance)
         {
             currentState = AIState.Pursuit;
         }
